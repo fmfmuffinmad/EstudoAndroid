@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.muffinalunos.muffinmad.muffinalunos.FormularioActivity">
+
+    <item
+        android:id="@+id/fomulario_action_save"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_confirmar"
+        android:title="@string/formulario_save"
+        app:showAsAction="always" />
+
+</menu>
