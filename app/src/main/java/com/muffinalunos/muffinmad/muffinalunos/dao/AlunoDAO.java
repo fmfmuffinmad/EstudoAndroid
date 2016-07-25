@@ -56,10 +56,10 @@ public class AlunoDAO extends SQLiteOpenHelper{
         Cursor c = db.rawQuery(sql, null);
 
         List<Aluno> alunos = new ArrayList<Aluno>();
-
+        Aluno aluno = null;
         while (c.moveToNext()) {
-            Aluno aluno = new Aluno();
-            aluno.setId(c.getLong(c.getColumnIndex("ID")));
+            aluno = new Aluno();
+            aluno.set_ID(c.getLong(c.getColumnIndex("ID")));
             aluno.set_nome(c.getString(c.getColumnIndex("NOME")));
             aluno.set_endereco(c.getString(c.getColumnIndex("ENDERECO")));
             aluno.set_telefone(c.getString(c.getColumnIndex("TELEFONE")));
