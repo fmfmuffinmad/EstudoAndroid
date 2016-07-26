@@ -8,6 +8,6 @@
         android:orderInCategory="100"
         android:icon="@drawable/ic_confirmar"
         android:title="@string/formulario_save"
-        app:showAsAction="always" />
+        app:showAsAction="always" /> <!-- Essa opção mostra o item como um ícone -->
 
 </menu>
