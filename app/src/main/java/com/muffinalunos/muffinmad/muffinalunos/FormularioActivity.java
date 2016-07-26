@@ -1,5 +1,6 @@
 package com.muffinalunos.muffinmad.muffinalunos;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -31,6 +32,15 @@ public class FormularioActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         helper = new formularioHelper(this);
+
+        // Recebendo parametros do Activity principal atraves do intent
+        Intent intent = getIntent();
+        Aluno aluno = (Aluno) intent.getSerializableExtra("aluno");
+        if(aluno != null){
+            helper.preencheFormulario(aluno);
+        }
+
+
     }
 
     @Override
@@ -54,7 +64,12 @@ public class FormularioActivity extends AppCompatActivity {
 
             Aluno aluno = helper.pegaAluno();
             AlunoDAO dao = new AlunoDAO(this);
-            dao.insert(aluno);
+            if (aluno.get_ID() != 0){
+                dao.altera(aluno);
+            }else{
+                dao.insert(aluno);
+            }
+
             dao.close();
             Toast.makeText(FormularioActivity.this, "Aluno "+aluno.get_nome()+" Salvo", Toast.LENGTH_LONG).show();
             finish();

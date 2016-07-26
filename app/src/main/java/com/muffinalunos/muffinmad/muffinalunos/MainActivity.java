@@ -45,7 +45,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> lista, View item, int i, long l) {
                 Aluno aluno = (Aluno) listStudents.getItemAtPosition(i);
-                Toast.makeText(MainActivity.this, aluno.get_nome(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, aluno.get_nome(), Toast.LENGTH_SHORT).show();
+                Intent vaiProFormulario = new Intent(MainActivity.this, FormularioActivity.class);
+                vaiProFormulario.putExtra("aluno", aluno);
+                startActivity(vaiProFormulario);
             }
         });
 

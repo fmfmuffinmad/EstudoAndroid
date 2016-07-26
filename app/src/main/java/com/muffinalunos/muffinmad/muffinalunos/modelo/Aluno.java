@@ -1,16 +1,18 @@
 package com.muffinalunos.muffinmad.muffinalunos.modelo;
 
+import java.io.Serializable;
+
 /**
  * Created by muffinmad on 20/07/2016.
  */
-public class Aluno {
+public class Aluno implements Serializable{
 
     private long _ID;
     private String _nome;
     private String _endereco;
     private String _telefone;
     private String _site;
-    private float _nota;
+    private int _nota;
 
     public long get_ID() {
         return _ID;
@@ -52,11 +54,11 @@ public class Aluno {
         this._site = _site;
     }
 
-    public float get_nota() {
+    public int get_nota() {
         return _nota;
     }
 
-    public void set_nota(float _nota) {
+    public void set_nota(int _nota) {
         this._nota = _nota;
     }
 

@@ -16,13 +16,15 @@ public class formularioHelper {
     private final EditText campoSite;
     private final RatingBar campoRating;
 
+    private Aluno aluno;
+
     public formularioHelper(FormularioActivity activity){
         campoNome = (EditText) activity.findViewById(R.id.formulario_txtNome);
         campoEndereco = (EditText) activity.findViewById(R.id.formulario_txtEndereco);
         campoTelefone = (EditText) activity.findViewById(R.id.formulario_txtTelefone);
         campoSite = (EditText) activity.findViewById(R.id.formulario_txtSite);
         campoRating = (RatingBar) activity.findViewById(R.id.formulario_nota);
-
+        aluno = new Aluno();
     }
     public boolean saveAluno(){
 
@@ -31,13 +33,21 @@ public class formularioHelper {
     }
 
     public Aluno pegaAluno() {
-        Aluno aluno = new Aluno();
         aluno.set_nome(campoNome.getText().toString());
         aluno.set_endereco(campoEndereco.getText().toString());
         aluno.set_telefone(campoTelefone.getText().toString());
         aluno.set_site(campoSite.getText().toString());
-        aluno.set_nota(campoRating.getRating());
+        aluno.set_nota(campoRating.getProgress());
 
         return aluno;
+    }
+
+    public void preencheFormulario(Aluno aluno) {
+        campoNome.setText(aluno.get_nome());
+        campoEndereco.setText(aluno.get_endereco());
+        campoTelefone.setText(aluno.get_telefone());
+        campoSite.setText(aluno.get_site());
+        campoRating.setProgress(aluno.get_nota());
+        this.aluno = aluno;
     }
 }

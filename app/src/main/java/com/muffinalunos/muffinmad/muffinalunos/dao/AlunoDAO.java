@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.NonNull;
 
 import com.muffinalunos.muffinmad.muffinalunos.modelo.Aluno;
 
@@ -41,13 +42,19 @@ public class AlunoDAO extends SQLiteOpenHelper{
 
     public void insert(Aluno aluno) {
         SQLiteDatabase db = getWritableDatabase();
+        ContentValues dados = getContentValues(aluno);
+        db.insert("ALUNOS", null, dados);
+    }
+
+    @NonNull
+    private ContentValues getContentValues(Aluno aluno) {
         ContentValues dados = new ContentValues();
         dados.put("NOME", aluno.get_nome());
         dados.put("ENDERECO", aluno.get_endereco());
         dados.put("TELEFONE", aluno.get_telefone());
         dados.put("SITE", aluno.get_site());
         dados.put("NOTA", aluno.get_nota());
-        db.insert("ALUNOS", null, dados);
+        return dados;
     }
 
     public List<Aluno> buscaAlunos() {
@@ -64,7 +71,7 @@ public class AlunoDAO extends SQLiteOpenHelper{
             aluno.set_endereco(c.getString(c.getColumnIndex("ENDERECO")));
             aluno.set_telefone(c.getString(c.getColumnIndex("TELEFONE")));
             aluno.set_site(c.getString(c.getColumnIndex("SITE")));
-            aluno.set_nota(c.getFloat(c.getColumnIndex("NOME")));
+            aluno.set_nota(c.getInt(c.getColumnIndex("NOME")));
 
             alunos.add(aluno);
         }
@@ -78,5 +85,12 @@ public class AlunoDAO extends SQLiteOpenHelper{
         String[] params = {Long.toString(aluno.get_ID())};
         db.delete("Alunos", "id = ?", params);
 
+    }
+
+    public void altera(Aluno aluno) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues dados = getContentValues(aluno);
+        String[] param = {Long.toString(aluno.get_ID())};
+        db.update("ALUNOS", dados, "ID = ?", param);
     }
 }
