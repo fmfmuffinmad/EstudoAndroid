@@ -1,7 +1,9 @@
 package com.muffinalunos.muffinmad.muffinalunos;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Browser;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -92,12 +94,23 @@ public class MainActivity extends AppCompatActivity {
     // Menu de contexto. É aquele menu no meio da tela
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, final ContextMenu.ContextMenuInfo menuInfo) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        final Aluno aluno = (Aluno) listStudents.getItemAtPosition(info.position);
+
+        MenuItem visitar = menu.add("Visitar Site");
+        Intent intentSite = new Intent(Intent.ACTION_VIEW);
+        String site = aluno.get_site();
+        if(!site.startsWith("http://")){
+            site = "http://" + site;
+        }
+        intentSite.setData(Uri.parse(site));
+        visitar.setIntent(intentSite);
+
         MenuItem deletar = menu.add("Deletar");
         deletar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-                Aluno aluno = (Aluno) listStudents.getItemAtPosition(info.position);
+
                 Toast.makeText(MainActivity.this, "Aluno "+aluno.get_nome()+" deletado.", Toast.LENGTH_LONG).show();
 
                 AlunoDAO dao = new AlunoDAO(MainActivity.this);

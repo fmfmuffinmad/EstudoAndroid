@@ -47,7 +47,7 @@ public class formularioHelper {
         campoEndereco.setText(aluno.get_endereco());
         campoTelefone.setText(aluno.get_telefone());
         campoSite.setText(aluno.get_site());
-        campoRating.setProgress(aluno.get_nota());
+        campoRating.setRating(aluno.get_nota());
         this.aluno = aluno;
     }
 }
