@@ -37,7 +37,7 @@ public class formularioHelper {
         aluno.set_endereco(campoEndereco.getText().toString());
         aluno.set_telefone(campoTelefone.getText().toString());
         aluno.set_site(campoSite.getText().toString());
-        aluno.set_nota(campoRating.getProgress());
+        aluno.set_nota(campoRating.getRating());
 
         return aluno;
     }

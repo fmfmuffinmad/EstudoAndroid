@@ -12,7 +12,7 @@ public class Aluno implements Serializable{
     private String _endereco;
     private String _telefone;
     private String _site;
-    private int _nota;
+    private float _nota;
 
     public long get_ID() {
         return _ID;
@@ -54,11 +54,11 @@ public class Aluno implements Serializable{
         this._site = _site;
     }
 
-    public int get_nota() {
+    public float get_nota() {
         return _nota;
     }
 
-    public void set_nota(int _nota) {
+    public void set_nota(float _nota) {
         this._nota = _nota;
     }
 
