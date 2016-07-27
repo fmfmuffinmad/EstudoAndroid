@@ -3,11 +3,8 @@ package com.muffinalunos.muffinmad.muffinalunos;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Browser;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
 import android.view.View;
@@ -97,15 +94,31 @@ public class MainActivity extends AppCompatActivity {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
         final Aluno aluno = (Aluno) listStudents.getItemAtPosition(info.position);
 
-        MenuItem visitar = menu.add("Visitar Site");
+        // Item para visualizar endereco
+        MenuItem itemEndereco = menu.add("Ver Endereço");
+        Intent intentEndereco = new Intent(Intent.ACTION_VIEW);
+        intentEndereco.setData(Uri.parse("geo:0,0?q="+aluno.get_endereco()));
+        itemEndereco.setIntent(intentEndereco);
+
+        // Item para mandar SMS
+        MenuItem itemSMS = menu.add("Enviar SMS");
+        Intent intentSMS = new Intent(Intent.ACTION_VIEW);
+        intentSMS.setData(Uri.parse("sms:"+aluno.get_telefone()));
+        itemSMS.setIntent(intentSMS);
+
+
+        // Item para visitar o site cadastrado no aluno
+        MenuItem itemVisitar = menu.add("Visitar Site");
         Intent intentSite = new Intent(Intent.ACTION_VIEW);
         String site = aluno.get_site();
         if(!site.startsWith("http://")){
             site = "http://" + site;
         }
         intentSite.setData(Uri.parse(site));
-        visitar.setIntent(intentSite);
+        itemVisitar.setIntent(intentSite);
 
+
+        //item para deletar
         MenuItem deletar = menu.add("Deletar");
         deletar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
