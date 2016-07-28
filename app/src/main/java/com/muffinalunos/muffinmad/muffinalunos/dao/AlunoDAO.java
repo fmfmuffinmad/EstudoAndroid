@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class AlunoDAO extends SQLiteOpenHelper{
     public AlunoDAO(Context context) {
-        super(context, "Agenda", null, 1);
+        super(context, "Agenda", null, 2);
     }
 
     @Override
@@ -28,15 +28,21 @@ public class AlunoDAO extends SQLiteOpenHelper{
                 "ENDERECO TEXT," +
                 "TELEFONE TEXT," +
                 "SITE TEXT," +
-                "NOTA REAL); ";
+                "NOTA REAL," +
+                "CAMINHOFOTO TEXT); ";
         sqLiteDatabase.execSQL(sql);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        String sql = "DROP TABLE IF EXISTS ALUNOS";
-        sqLiteDatabase.execSQL(sql);
-        onCreate(sqLiteDatabase);
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
+        String sql = null;
+        switch (oldVersion){
+            case 1:
+                sql = "ALTER TABLE ALUNOS ADD COLUMN CAMINHOFOTO TEXT";
+                sqLiteDatabase.execSQL(sql);
+        }
+
+
     }
 
 
@@ -54,6 +60,7 @@ public class AlunoDAO extends SQLiteOpenHelper{
         dados.put("TELEFONE", aluno.get_telefone());
         dados.put("SITE", aluno.get_site());
         dados.put("NOTA", aluno.get_nota());
+        dados.put("CAMINHOFOTO", aluno.get_caminhoFoto());
         return dados;
     }
 
@@ -72,6 +79,7 @@ public class AlunoDAO extends SQLiteOpenHelper{
             aluno.set_telefone(c.getString(c.getColumnIndex("TELEFONE")));
             aluno.set_site(c.getString(c.getColumnIndex("SITE")));
             aluno.set_nota(c.getFloat(c.getColumnIndex("NOTA")));
+            aluno.set_caminhoFoto(c.getString(c.getColumnIndex("CAMINHOFOTO")));
 
             alunos.add(aluno);
         }

@@ -1,7 +1,12 @@
 package com.muffinalunos.muffinmad.muffinalunos;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +18,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.Toast;
@@ -20,9 +26,13 @@ import android.widget.Toast;
 import com.muffinalunos.muffinmad.muffinalunos.dao.AlunoDAO;
 import com.muffinalunos.muffinmad.muffinalunos.modelo.Aluno;
 
+import java.io.File;
+
 public class FormularioActivity extends AppCompatActivity {
 
+    public static final int CODIGO_CAMERA = 567;
     private formularioHelper helper;
+    private String caminhoFoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +44,39 @@ public class FormularioActivity extends AppCompatActivity {
         helper = new formularioHelper(this);
 
         // Recebendo parametros do Activity principal atraves do intent
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         Aluno aluno = (Aluno) intent.getSerializableExtra("aluno");
         if(aluno != null){
             helper.preencheFormulario(aluno);
         }
 
+        // botao da foto
+        FloatingActionButton btnFoto = (FloatingActionButton) findViewById(R.id.formulario_btnFoto);
+        btnFoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentTiraFoto = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                caminhoFoto = getExternalFilesDir(null) + "/" + System.currentTimeMillis() +".jpg";
+                File arquivoFoto = new File(caminhoFoto);
+                intentTiraFoto.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(arquivoFoto));
+                startActivityForResult(intentTiraFoto, CODIGO_CAMERA);
+
+            }
+        });
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK){
+            if (requestCode == CODIGO_CAMERA){
+                helper.carregaImagem(caminhoFoto);
+
+//                Bitmap bitmapReduzido = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
+//                imgFoto.setImageBitmap(bitmapReduzido);
+//                imgFoto.setScaleType(ImageView.ScaleType.MATRIX);
+            }
+        }
 
     }
 

@@ -13,6 +13,7 @@ public class Aluno implements Serializable{
     private String _telefone;
     private String _site;
     private float _nota;
+    private String _caminhoFoto;
 
     public long get_ID() {
         return _ID;
@@ -60,6 +61,14 @@ public class Aluno implements Serializable{
 
     public void set_nota(float _nota) {
         this._nota = _nota;
+    }
+
+    public String get_caminhoFoto() {
+        return _caminhoFoto;
+    }
+
+    public void set_caminhoFoto(String _caminhoFoto) {
+        this._caminhoFoto = _caminhoFoto;
     }
 
     public Aluno(){
