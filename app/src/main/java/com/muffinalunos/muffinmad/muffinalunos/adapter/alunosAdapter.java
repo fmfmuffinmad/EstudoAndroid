@@ -1,12 +1,17 @@
 package com.muffinalunos.muffinmad.muffinalunos.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.muffinalunos.muffinmad.muffinalunos.MainActivity;
+import com.muffinalunos.muffinmad.muffinalunos.R;
+import com.muffinalunos.muffinmad.muffinalunos.helpers.ImageHelper;
 import com.muffinalunos.muffinmad.muffinalunos.modelo.Aluno;
 
 import java.util.List;
@@ -30,18 +35,29 @@ public class AlunosAdapter extends BaseAdapter{
 
     @Override
     public Object getItem(int i) {
-        return null;
+        return alunos.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return alunos.get(i).get_ID();
     }
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        TextView textView = new TextView(context);
-        textView.setText("Pos: "+ i);
-        return null;
+        Aluno aluno = alunos.get(i);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View viewInflada = inflater.inflate(R.layout.list_item, null);
+        TextView campoNome = (TextView) viewInflada.findViewById(R.id.item_nome);
+        campoNome.setText(aluno.get_nome());
+        TextView campoTelefone = (TextView) viewInflada.findViewById(R.id.item_telefone);
+        campoTelefone.setText(aluno.get_telefone());
+        ImageView campoImagem = (ImageView) viewInflada.findViewById(R.id.item_foto);
+        ImageHelper imageHelper = new ImageHelper();
+        Bitmap bitmap = imageHelper.lessResolution(aluno.get_caminhoFoto(), 64, 64);
+        campoImagem.setImageBitmap(bitmap);
+
+
+        return viewInflada;
     }
 }

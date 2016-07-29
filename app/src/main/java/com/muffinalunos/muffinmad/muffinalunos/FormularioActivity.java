@@ -2,28 +2,20 @@ package com.muffinalunos.muffinmad.muffinalunos;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.muffinalunos.muffinmad.muffinalunos.dao.AlunoDAO;
+import com.muffinalunos.muffinmad.muffinalunos.helpers.FormularioHelper;
 import com.muffinalunos.muffinmad.muffinalunos.modelo.Aluno;
 
 import java.io.File;
@@ -31,7 +23,7 @@ import java.io.File;
 public class FormularioActivity extends AppCompatActivity {
 
     public static final int CODIGO_CAMERA = 567;
-    private formularioHelper helper;
+    private FormularioHelper helper;
     private String caminhoFoto;
 
     @Override
@@ -41,7 +33,7 @@ public class FormularioActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        helper = new formularioHelper(this);
+        helper = new FormularioHelper(this);
 
         // Recebendo parametros do Activity principal atraves do intent
         final Intent intent = getIntent();
