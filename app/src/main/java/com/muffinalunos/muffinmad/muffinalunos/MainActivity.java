@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.muffinalunos.muffinmad.muffinalunos.adapter.AlunosAdapter;
 import com.muffinalunos.muffinmad.muffinalunos.dao.AlunoDAO;
 import com.muffinalunos.muffinmad.muffinalunos.modelo.Aluno;
 
@@ -55,14 +56,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Click longo na lista. Pode substituir a ação do context menu
-//        listStudents.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                return false;
-//            }
-//        });
-
         //Botão flutuante com o listener pra click
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -80,8 +73,10 @@ public class MainActivity extends AppCompatActivity {
     private void carregaAlunos() {
         AlunoDAO dao = new AlunoDAO(this);
         List<Aluno> aluno = dao.buscaAlunos();// Essa função na DAO é um select
-        ArrayAdapter<Aluno> adapter = new ArrayAdapter<Aluno>(this, android.R.layout.simple_list_item_1, aluno);
-        listStudents.setAdapter(adapter);
+        dao.close();
+
+        AlunosAdapter alunosAdapter = new AlunosAdapter(this, aluno);
+        listStudents.setAdapter(alunosAdapter);
     }
 
 
